@@ -57,13 +57,18 @@ npm run test
 
 - Theming: Tailwind CSS with next-themes ensures adaptive dark/light mode with system preference detection.
 
-### Trade-offs:
+### ⚖️ Trade-offs
 
-- Decided to use RTK Query instead of plain fetch for caching and auto-refetching.
+- **State Management & Data Fetching:** Chose **RTK Query** over plain `fetch` or `axios` for its built-in caching, auto-refetching, and simplified API handling. The trade-off is a slightly steeper learning curve and tighter coupling with Redux.  
 
-- Chose charts for better user engagement, but this adds an extra dependency.
+- **Data Visualization:** Implemented charts to enhance user engagement and make repository stats more intuitive. This introduces an additional dependency (e.g., `recharts`), which increases bundle size and maintenance overhead.  
 
-- Pagination implemented with buttons (simpler UX) but can be upgraded to infinite scroll for better scalability.
+- **Pagination:** Currently implemented with **"Load More" buttons** for simplicity and reliability. Infinite scroll was considered for a smoother UX but deferred due to time constraints. This can be upgraded in the future for better scalability.  
+
+- **Search Experience:** A **debounced live search** (fetching as the user types) would improve responsiveness and reduce API calls. However, due to limited time, a manual search trigger was implemented instead.  
+
+- **Known Limitation:** In some cases, after clicking enter repositories may not appear immediately without clicking **"Load More"**. This is due to pagination state handling, which can be optimized with further debugging.  
+.
 
 ## 🌍 Scaling for 100,000 Daily Users
 
