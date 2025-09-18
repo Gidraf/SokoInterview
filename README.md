@@ -1,36 +1,130 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GitHub Repository Explorer
 
-## Getting Started
+A Next.js + TypeScript application that allows users to search for GitHub repositories, view them as responsive cards, and dive into detailed repo information.  
+The app includes **sorting, filtering, search within results, pagination, charts for repo stats, dark/light mode, and responsive UI enhancements**.
 
-First, run the development server:
+---
 
+## 🚀 Features
+- 🔍 Search for repositories by username  
+- ⭐ Sort & Filter repos by stars, forks, language, and last updated  
+- 📊 Repo stats dashboard (stars, forks, languages) using charts  
+- 📱 Responsive card layout with badges for stars/forks/language  
+- 📄 View repository details including contributors and metadata  
+- 📑 Pagination with next/prev buttons (extendable to infinite scroll)  
+
+---
+
+## 🛠️ Getting Started
+
+### Prerequisites
+- Node.js (>= 18.x)
+- npm or yarn
+- A GitHub API base URL (default: `https://api.github.com/`)
+
+### Installation
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# clone the repo
+git clone https://github.com/your-username/github-repo-explorer.git
+cd github-repo-explorer
+
+# install dependencies
+npm install 
+
 ```
+### Running the App
+```bash
+# development
+npm run dev
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# production build
+npm run build
+npm start
+```
+```bash
+# run tests
+npm run test
+```
+### 📖 Documentation & Approach
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Next.js + TypeScript: Provides a scalable, strongly-typed, and SEO-friendly foundation.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Redux Toolkit (RTK Query): Handles API state management with caching, pagination, and hooks.
 
-## Learn More
+- Reusable Hooks: Implemented usePagination and reusable API hooks for maintainability.
 
-To learn more about Next.js, take a look at the following resources:
+- Charts: recharts used for lightweight visualization of repo stats.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Theming: Tailwind CSS with next-themes ensures adaptive dark/light mode with system preference detection.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Trade-offs:
 
-## Deploy on Vercel
+- Decided to use RTK Query instead of plain fetch for caching and auto-refetching.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Chose charts for better user engagement, but this adds an extra dependency.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Pagination implemented with buttons (simpler UX) but can be upgraded to infinite scroll for better scalability.
+
+## 🌍 Scaling for 100,000 Daily Users
+
+### 🔐 Authentication
+
+**Design**  
+- Use OAuth2 (GitHub, Google) for seamless login and reduced friction.  
+- JWT tokens (short-lived access + long-lived refresh tokens) for secure sessions.  
+- Store tokens in HTTP-only cookies to prevent XSS attacks.  
+
+**Scalability**  
+- Leverage CDN + load balancers for global performance.  
+- Use distributed session storage (e.g., Redis) to handle multiple servers.
+- Introduce Protocal Buffers in order to read and Write faster
+
+**User Experience**  
+- Support passwordless login (email magic link or OAuth).  
+- Implement MFA for sensitive operations.  
+
+---
+
+### 🔍 Search Functionality
+
+**Backend**  
+- Use Elasticsearch or Algolia for indexing repositories with autocomplete, faceted filtering, and typo tolerance.  
+- Implement caching layers (Redis) to speed up repeated queries.  
+
+**Frontend**  
+- Client-side filtering and sorting for already-fetched data.  
+- Debounced search inputs to avoid excessive API calls.  
+- Infinite scroll pagination for smooth browsing.  
+
+**Optimization**  
+- Precompute and cache trending/popular repos.  
+- Use GraphQL (via GitHub API v4) for more efficient queries.  
+
+---
+
+### 📊 Monitoring & Maintenance
+
+**Monitoring Tools**  
+- Prometheus + Grafana for infrastructure metrics (CPU, memory, latency).  
+- Sentry or LogRocket for error tracking and frontend performance.  
+- Datadog / New Relic for APM and real-time tracing.  
+
+**Health Checks**  
+- Implement readiness/liveness probes in containers.  
+- Auto-scaling with Kubernetes (HPA) based on CPU/memory usage.  
+
+**Maintenance Strategy**  
+- CI/CD pipelines (GitHub Actions) for automated testing and deployments.  
+- Blue-green deployments to minimize downtime.  
+- Regular dependency and security audits.  
+
+---
+
+### 📌 Future Improvements
+- Infinite scroll for repo browsing  
+- Favorites system with localStorage persistence  
+- Offline support via PWA  
+- Gamification (leaderboards, badges)  
+- Enhanced charts for repo growth over time  
+
+

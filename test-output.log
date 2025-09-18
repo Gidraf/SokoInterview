@@ -1,0 +1,12 @@
+
+> github-client@0.1.0 test:ci /Users/gmtange/Projects/Soko/github-client
+> jest --ci --coverage
+
+● Validation Error:
+
+  Preset ts-jest not found relative to rootDir /Users/gmtange/Projects/Soko/github-client.
+
+  Configuration Documentation:
+  https://jestjs.io/docs/configuration
+
+ ELIFECYCLE  Command failed with exit code 1.
